@@ -1,0 +1,55 @@
+create database mydb;
+
+use mydb;
+
+hive> create table trans(tid string,d string,uid string,amt double,
+    > cate string,pro string,city string,state string,paym string)
+    > row format delimited
+    > fields terminated by ','
+    > stored as textfile;
+OK
+
+hive> select * from trans;
+OK
+
+hive> load data local inpath '/home/cloudera/Desktop/mydata/trans.dat' into
+    > table trans;
+
+OK
+
+TASK1:
+
+ select * from trans where amt>160;
+
+TASK2:
+
+Select COUNT(*) from trans where amt>175 and amt<200;
+
+TASK3:
+
+Select sum(amt),count(uid),avg(amt),uid from trans group by uid;
+
+ADDITIONAL TASK::;
+
+hive> create table cus1(cid string,fname string,lname string,age string,pro string)
+    > row format delimited
+    > fields terminated by ','
+    > stored as textfile;
+OK
+Time taken: 0.193 seconds
+
+
+
+-----------------server log--------------------------
+
+create table server(d string,time string,module string,loginfo string)row format delimited fields terminated by ' ' stored as textfile;
+
+load data local inpath '/home/cloudera/Desktop/mydata/sample.log' into table server;
+
+Find The module name which is generating maximum error logs.
+TASK1:
+
+select module from server where loginfo='[ERROR]';  
+
+
+select max(module) from server where loginfo='[ERROR]' group by loginfo;  
